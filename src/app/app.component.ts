@@ -14,6 +14,19 @@ export class AppComponent {
   itemArray: string[] = new Array(9).fill('empty');
   constructor(private toastr: ToastrService) {}
 
+  handleClick(itemNum: number) {
+    if (this.winMessage) {
+      return this.toastr.success(this.winMessage);
+    }
+
+    if (this.itemArray[itemNum] === 'empty') {
+      this.itemArray[itemNum] = this.isCross ? 'cross' : 'circle';
+      this.isCross = !this.isCross;
+    } else return this.toastr.info('Already Filled');
+
+    this.checkIsWinner();
+  }
+
   checkIsWinner() {
     const lines = [
       [0, 1, 2],
